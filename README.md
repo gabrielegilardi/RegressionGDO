@@ -2,7 +2,7 @@
 
 ## Reference
 
-- Mathematical background: [linear models in Scikit-Learn](https://scikit-learn.org/stable/modules/linear_model.html).
+- Mathematical background: [linear model in Scikit-Learn](https://scikit-learn.org/stable/modules/linear_model.html).
 
 - Datasets: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets.php).
 
@@ -12,7 +12,7 @@
 - Multi-input/multi-output (multivariate) regression implementation.
 - Quadratic cost function for linear regression of continuous problems.
 - Cross-entropy cost function for logistic regression of classification problems.
-- Both cost functions have an L2-type regularization term.
+- Both cost functions include an L2-type regularization term.
 - Classes in logistic regression are determined automatically.
 - Option to not to compute and return the gradient of the cost function.
 - A gradient descent optimizer (GDO) is included in *utils.py*, together with several other utility functions.
@@ -23,11 +23,11 @@
 
 `example` Name of the example to run (`house`, `stock`, `seed`, `wine`.)
 
-`problem` Defines the type of problem. Equal to C specifies logistic regression, anything else specifies linear regression. Default value is `None`.
+`problem` Defines the type of problem. Equal to C specifies logistic regression, anything else specifies linear regression. The default value is `None`.
 
-`use_grad` Specifies if the gradient is calculated and returned. Default value is `True`.
+`use_grad` Specifies if the gradient is calculated and returned. The default value is `True`.
 
-`data_file` File name with the dataset (csv).
+`data_file` File name with the dataset (csv format).
 
 `n_features` Number of features in the dataset (needed only for linear regression).
 
@@ -41,13 +41,13 @@
 
 `d_alpha` Rate decay of the learning rate (GDO).
 
-`tolX`, `tolF` Tolerance on the gradient and relative tolerance on the function (GDO). If both are not specified the GDO will exit when the max. number of iterations is reached. If both are specified the GDO will exit if either is satisfied.
+`tolX`, `tolF` Gradient absolute tolerance and function relative tolerance (GDO). If both are specified the GDO will exit if either is satisfied. If both are not specified the GDO will exit when the max. number of iterations is reached.
 
 ## Examples
 
 There are four examples in *test.py*: `house`, `stock`, `seed`, `wine`. Since GDO is used, `use_grad` is set to `True`.
 
-### Linear regression examples: `house`
+### Single-label linear regression examples: `house`
 
 ```python
 data_file = 'house_dataset.csv'
@@ -69,7 +69,7 @@ Correlation predicted/actual values: 0.887 (training), 0.787 (test).
 
 Exit on `tolX` after 52 epochs.
 
-### Linear regression examples: `stock`
+### Multi-label linear regression examples: `stock`
 
 ```python
 data_file = 'stock_dataset.csv'
@@ -95,7 +95,7 @@ Correlation predicted/actual values: 0.944 (training), 0.945 (test).
 
 Exit on `tolX` after 812 epochs.
 
-### Logistic regression examples: `seed`
+### Multi-class logistic regression examples: `seed`
 
 ```python
 data_file = 'seed_dataset.csv'
@@ -115,7 +115,7 @@ Accuracies predicted/actual values: 97.3% (training), 95.2% (test).
 
 Exit on `tolF` after 19387 epochs.
 
-### Logistic regression examples: `wine`
+### Multi-class logistic regression examples: `wine`
 
 ```python
 data_file = 'wine_dataset.csv'

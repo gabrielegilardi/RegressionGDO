@@ -3,13 +3,13 @@ Multivariate Linear and Logistic Regression
 
 Copyright (c) 2020 Gabriele Gilardi
 
+
 References
 ----------
-
-- Mathematical background: linear models in Scikit-Learn at
+- Mathematical background: linear models in Scikit-Learn @
 https://scikit-learn.org/stable/modules/linear_model.html.
 
-- Datasets: UCI Machine Learning Repository at
+- Datasets: UCI Machine Learning Repository @
 https://archive.ics.uci.edu/ml/datasets.php.
 
 Characteristics
@@ -19,7 +19,7 @@ Characteristics
 - Quadratic cost function for linear regression of continuous problems.
 - Cross-entropy cost function for logistic regression of classification
   problems.
-- Both cost functions have an L2-type regularization term.
+- Both cost functions include an L2-type regularization term.
 - Classes in logistic regression are determined automatically.
 - Option to not to compute and return the gradient of the cost function.
 - A gradient descent optimizer (GDO) is included in *utils.py*, together
@@ -34,12 +34,12 @@ example = house, stock, seed, wine
     Name of the example to run.
 problem
     Defines the type of problem. Equal to C specifies logistic regression,
-    anything else specifies linear regression. Default value is <None>.
+    anything else specifies linear regression. The default value is <None>.
 use_grad = True, False
-    Specifies if the gradient is calculated and returned. Default value is
-    <True>.
+    Specifies if the gradient is calculated and returned. The default value
+    is <True>.
 data_file
-    File name with the dataset (csv).
+    File name with the dataset (csv format).
 n_features
     Number of features in the dataset (needed only for linear regression).
 0 < split_factor < 1
@@ -53,18 +53,15 @@ epochs
 0 < d_alpha <= 1
     Rate decay of the learning rate (GDO).
 tolX, tolF
-    Tolerance on the gradient and relative tolerance on the function (GDO). If
-    both are not specified the GDO will exit when the max. number of iterations
-    is reached. If both are specified the GDO will exit if either is satisfied.
-
+    Gradient absolute tolerance and function relative tolerance (GDO). If both
+    are specified the GDO will exit if either is satisfied. If both are not
+    specified the GDO will exit when the max. number of iterations is reached.
 """
 
 import sys
 import numpy as np
 import regression as reg
 import utils as utl
-
-# ======= Examples ======= #
 
 # Read example to run
 if len(sys.argv) != 2:
@@ -76,7 +73,7 @@ problem = None              # By default is a linear regression problem
 use_grad = True             # By default calculate and return the gradient
 np.random.seed(1294404794)
 
-# Linear regression example
+#  Single-label linear regression example
 if (example == 'house'):
     # 2 features, 1 label, 47 samples, 3 variables
     # Closed-form solution = [335275.000, 113800.857, -3908.923]
@@ -92,7 +89,7 @@ if (example == 'house'):
     tolX = 1.e-7
     tolF = None
 
-# Linear regression example
+#  Multi-label linear regression example
 elif (example == 'stock'):
     # 7 features, 2 labels, 536 samples, 16 variables
     # Closed-form solution =
@@ -111,7 +108,7 @@ elif (example == 'stock'):
     tolX = 1.e-7
     tolF = None
 
-# Logistic regression example
+# Multi-class logistic regression example
 elif (example == 'seed'):
     # 7 features, 3 classes, 210 samples, 24 variables
     # Accuracies predicted/actual values: 97.3% (training), 95.2% (test).
@@ -126,7 +123,7 @@ elif (example == 'seed'):
     tolX = None
     tolF = 1.e-6
 
-# Logistic regression example
+# Multi-class ogistic regression example
 elif (example == 'wine'):
     # 11 features, 6 classes, 1599 samples, 72 variables
     # Accuracies predicted/actual values: 60.7% (training), 57.9% (test).
@@ -145,20 +142,17 @@ else:
     print("Example not found")
     sys.exit(1)
 
-# ======= Main Code ======= #
-
-
 # Read data from a csv file
 data = np.loadtxt(data_file, delimiter=',')
 n_samples, n_cols = data.shape
 
-# Logistic regression (label column is always the last one)
+# Logistic regression (the label column is always the last one)
 if (problem == 'C'):
     n_features = n_cols - 1
     n_labels = 1
     n_outputs, class_list = utl.get_classes(data[:, -1])
 
-# Linear regression (label columns are always at the end)
+# Linear regression (the label columns are always at the end)
 else:
     n_labels = n_cols - n_features
     n_outputs = n_labels
@@ -200,12 +194,12 @@ Xn_tr, param = utl.normalize_data(X_tr)
 X1n_tr = np.block([np.ones((rows_tr, 1)), Xn_tr])
 
 # Initialize learner
-learner = reg.Regression(problem=problem, use_grad=use_grad)
+learner = reg.Regression(problem=problem, use_grad=use_grad, L2=L2)
 
 # Gradient descent optimization
 func = learner.create_model
 theta0 = np.zeros(n_var)
-args = (X1n_tr, Y_tr, L2)
+args = (X1n_tr, Y_tr)
 theta, F, info = utl.GDO(func, theta0, args=args, epochs=epochs, alpha=alpha,
                          d_alpha=d_alpha, tolX=tolX, tolF=tolF)
 
@@ -216,12 +210,12 @@ print("F = ", F)
 print("Info = ", info)
 
 # Evaluate training data
-Yp_tr = learner.eval_data(X1n_tr, theta)
+Yp_tr = learner.eval_data(X1n_tr)
 
 # Normalize and evaluate test data
 Xn_te = utl.normalize_data(X_te, param)
 X1n_te = np.block([np.ones((rows_te, 1)), Xn_te])
-Yp_te = learner.eval_data(X1n_te, theta)
+Yp_te = learner.eval_data(X1n_te)
 
 # Results for logistic regression (accuracy and correlation)
 if (problem == 'C'):

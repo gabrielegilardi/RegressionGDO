@@ -50,7 +50,8 @@ def GDO(func, X0, epochs=500, args=None, alpha=0.9, d_alpha=1.0, tolX=None,
         F_old = F
         alpha = alpha * d_alpha
 
-    # Return convergency info
+    # Evaluate the function before to exit and return convergency info
+    F, grad = func(X, args)
     info = ('epoch', epoch, 'tolX', deltaX, 'tolF', deltaF)
     return X, F, info
 

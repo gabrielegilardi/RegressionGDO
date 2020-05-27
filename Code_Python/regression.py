@@ -5,8 +5,8 @@ Copyright (c) 2020 Gabriele Gilardi
 
 
 Common quantities:
-    X           (n_samples, 1+n_features)           Input dataset
-    Xp          (n_samples, 1+n_features)           Input dataset
+    X           (n_samples, 1+n_features)           Input dataset (training)
+    Xp          (n_samples, 1+n_features)           Input dataset (prediction)
     L2          scalar                              Regularization factor
     J           scalar                              Cost function
 
@@ -61,18 +61,22 @@ def build_class_matrix(Y):
 
 class Regression:
 
-    def __init__(self, problem=None, use_grad=True):
+    def __init__(self, problem=None, use_grad=True, L2=0.0):
         """
         problem         C = logistic regression, otherwise linear regression
         use_grad        True = calculate and return the gradient
+        L2              Regolarizarion factor
         """
         self.problem = problem
         self.use_grad = use_grad
+        self.L2 = L2
         self.W = np.array([])               # Weight matrix
 
-        # For logistic regression set flag to initialize Y at the first epoch
+        # For logistic regression only
         if (self.problem == 'C'):
-            self.init_Y = True
+            self.init_Y = True              # Flag to initialize Yout
+            self.Yout = np.array([])        # Actual output
+            self.Yu = np.array([])          # Class list
 
     def create_model(self, theta, args):
         """
@@ -81,7 +85,6 @@ class Regression:
         # Unpack the arguments
         X = args[0]             # Input dataset
         Y = args[1]             # Output dataset
-        L2 = args[2]            # Regularizarion factor
 
         # Build the weight matrix
         self.build_weight_matrix(theta, X.shape[1])
@@ -95,13 +98,13 @@ class Regression:
                 self.init_Y = False
 
             # Cross-entropy cost function and the gradient
-            J, grad = self.cross_entropy_function(X, self.Yout, L2)
+            J, grad = self.cross_entropy_function(X)
 
         # Linear regression problem
         else:
 
             # Quadratic cost function and the gradient
-            J, grad = self.quadratic_function(X, Y, L2)
+            J, grad = self.quadratic_function(X, Y)
 
         # If not used don't return the gradient
         if (self.use_grad):
@@ -109,13 +112,10 @@ class Regression:
         else:
             return J
 
-    def eval_data(self, Xp, theta):
+    def eval_data(self, Xp):
         """
         Evaluate the input dataset with the model created in <create_model>.
         """
-        # Build the weight matrix
-        self.build_weight_matrix(theta, Xp.shape[1])
-
         # Logistic regression problem
         if (self.problem == 'C'):
 
@@ -142,7 +142,7 @@ class Regression:
         n_outputs = len(theta) // n_inputs
         self.W = np.reshape(theta, (n_inputs, n_outputs))
 
-    def cross_entropy_function(self, X, Y, L2):
+    def cross_entropy_function(self, X):
         """
         Computes the cross-entropy cost function and the gradient (including
         the L2 regularization term).
@@ -156,9 +156,9 @@ class Regression:
         A = np.fmin(np.fmax(A, tiny_number), (1.0 - tiny_number))
 
         # Cost function
-        error = Y * np.log(A) + (1.0 - Y) * np.log(1.0 - A)
+        error = self.Yout * np.log(A) + (1.0 - self.Yout) * np.log(1.0 - A)
         J = - error.sum() / n_samples \
-            + L2 * (self.W[1:, :] ** 2).sum() / (2.0 * n_samples)
+            + self.L2 * (self.W[1:, :] ** 2).sum() / (2.0 * n_samples)
 
         # Return if gradient is not requested
         if (self.use_grad is False):
@@ -166,13 +166,13 @@ class Regression:
 
         # Gradient
         a0 = np.zeros((1, self.W.shape[1]))
-        grad = X.T @ (A - Y) / n_samples \
-               + L2 * np.vstack((a0, self.W[1:, :])) / n_samples
+        grad = X.T @ (A - self.Yout) / n_samples \
+               + self.L2 * np.vstack((a0, self.W[1:, :])) / n_samples
 
         # Return the cost function and the unrolled gradient
         return J, grad.flatten()
 
-    def quadratic_function(self, X, Y, L2):
+    def quadratic_function(self, X, Y):
         """
         Computes the quadratic cost function and the gradient (including the
         L2 regularization term).
@@ -182,7 +182,7 @@ class Regression:
         # Cost function
         error = X @ self.W - Y
         J = 1.0 / (2.0 * n_samples) \
-            * ((error ** 2).sum() + L2 * (self.W[1:, :] ** 2).sum())
+            * ((error ** 2).sum() + self.L2 * (self.W[1:, :] ** 2).sum())
 
         # Return if gradient is not requested
         if (self.use_grad is False):
@@ -190,8 +190,8 @@ class Regression:
 
         # Gradient
         a0 = np.zeros((1, self.W.shape[1]))
-        grad = X.T @ (A - Y) / n_samples \
-               + L2 * np.vstack((a0, self.W[1:, :])) / n_samples
+        grad = X.T @ error / n_samples \
+               + self.L2 * np.vstack((a0, self.W[1:, :])) / n_samples
 
         # Return the cost function and the unrolled gradient
         return J, grad.flatten()
