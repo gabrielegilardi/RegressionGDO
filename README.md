@@ -21,7 +21,7 @@
 
 ## Parameters
 
-`example` Name of the example to run (`house`, `stock`, `seed`, `wine`.)
+`example` Name of the example to run (house, stock, seed, wine.)
 
 `problem` Defines the type of problem. Equal to C specifies logistic regression, anything else specifies linear regression. The default value is `None`.
 
@@ -45,9 +45,9 @@
 
 ## Examples
 
-There are four examples in *test.py*: `house`, `stock`, `seed`, `wine`. Since GDO is used, `use_grad` is set to `True`.
+There are four examples in *test.py*: house, stock, seed, wine. Since GDO is used, `use_grad` is set to `True`.
 
-### Single-label linear regression examples: `house`
+### Single-label linear regression examples: house
 
 ```python
 data_file = 'house_dataset.csv'
@@ -69,7 +69,7 @@ Correlation predicted/actual values: 0.887 (training), 0.787 (test).
 
 Exit on `tolX` after 52 epochs.
 
-### Multi-label linear regression examples: `stock`
+### Multi-label linear regression examples: stock
 
 ```python
 data_file = 'stock_dataset.csv'
@@ -85,17 +85,13 @@ tolF = None
 
 The dataset has 7 features, 2 labels, 536 samples, and 16 variables.
 
-Closed-form solution:
-
-[ 0.00073131  0.00136731 -0.00056476 -0.00317299  0.00135512  0.00584854
- -0.00018105 -0.00161590  0.00545528  0.00059722  0.00671988  0.00202262
-  0.00014225  0.00309809  0.00059391  0.00506524]
+Closed-form solution: [ 0.00073131,  0.00136731, -0.00056476, -0.00317299,  0.00135512,  0.00584854, -0.00018105, -0.00161590,  0.00545528,  0.00059722,  0.00671988,  0.00202262,  0.00014225,  0.00309809,  0.00059391,  0.00506524]
 
 Correlation predicted/actual values: 0.944 (training), 0.945 (test).
 
 Exit on `tolX` after 812 epochs.
 
-### Multi-class logistic regression examples: `seed`
+### Multi-class logistic regression examples: seed
 
 ```python
 data_file = 'seed_dataset.csv'
@@ -115,7 +111,7 @@ Accuracies predicted/actual values: 97.3% (training), 95.2% (test).
 
 Exit on `tolF` after 19387 epochs.
 
-### Multi-class logistic regression examples: `wine`
+### Multi-class logistic regression examples: wine
 
 ```python
 data_file = 'wine_dataset.csv'
