@@ -112,7 +112,7 @@ def scale_data(X, param=()):
 
 def get_classes(Y):
     """
-    Return the number of classes (unique values) in array Y and the
+    Returns the number of classes (unique values) in array Y and the
     corresponding list.
     """
     class_list = np.unique(Y)
@@ -123,7 +123,7 @@ def get_classes(Y):
 
 def build_class_matrix(Y):
     """
-    Build the output array Yout for a classification problem. Array Y has
+    Builds the output array Yout for a classification problem. Array Y has
     dimensions (n_samples, 1) while Yout has dimension (n_samples, n_classes).
     Yout[i,j] = 1 specifies that the i-th sample belongs to the j-th class.
     """
@@ -142,7 +142,7 @@ def build_class_matrix(Y):
 
 def build_weight_matrix(weight_array, n_inputs):
     """
-    Build the weight matrix from the array of variables.
+    Builds the weight matrix from the array of variables.
     Note: each COLUMN contains the coefficients of each output label.
     """
     n_outputs = len(weight_array) // n_inputs

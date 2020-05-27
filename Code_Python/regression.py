@@ -42,7 +42,7 @@ def f_activation(z):
 
 def build_class_matrix(Y):
     """
-    Build the output array <Yout> for a classification problem. Array <Y> has
+    Builds the output array <Yout> for a classification problem. Array <Y> has
     dimensions (n_samples, 1) and <Yout> has dimension (n_samples, n_classes).
     Yout[i,j] = 1 specifies that the i-th sample belongs to the j-th class.
     """
@@ -80,7 +80,7 @@ class Regression:
 
     def create_model(self, theta, args):
         """
-        Create the model for a linear/logistic regression problem.
+        Creates the model for a linear/logistic regression problem.
         """
         # Unpack the arguments
         X = args[0]             # Input dataset
@@ -97,13 +97,13 @@ class Regression:
                 self.Yout, self.Yu = build_class_matrix(Y)
                 self.init_Y = False
 
-            # Cross-entropy cost function and the gradient
+            # Cross-entropy cost function and gradient
             J, grad = self.cross_entropy_function(X)
 
         # Linear regression problem
         else:
 
-            # Quadratic cost function and the gradient
+            # Quadratic cost function and gradient
             J, grad = self.quadratic_function(X, Y)
 
         # If not used don't return the gradient
@@ -114,7 +114,7 @@ class Regression:
 
     def eval_data(self, Xp):
         """
-        Evaluate the input dataset with the model created in <create_model>.
+        Evaluates the input dataset with the model created in <create_model>.
         """
         # Logistic regression problem
         if (self.problem == 'C'):
@@ -137,7 +137,7 @@ class Regression:
 
     def build_weight_matrix(self, theta, n_inputs):
         """
-        Build the weight matrix from the array of variables.
+        Builds the weight matrix from the array of variables.
         """
         n_outputs = len(theta) // n_inputs
         self.W = np.reshape(theta, (n_inputs, n_outputs))
