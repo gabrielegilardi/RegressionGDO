@@ -4,28 +4,26 @@ Class for Multivariate Linear and Logistic Regression.
 Copyright (c) 2020 Gabriele Gilardi
 
 
-Common quantities:
-    X           (n_samples, 1+n_features)           Input dataset (training)
-    Xp          (n_samples, 1+n_features)           Input dataset (prediction)
-    L2          scalar                              Regularization factor
-    J           scalar                              Cost function
+Arrays:
+    X           (n_samples, n_inputs)           Input dataset (training)
+    Xp          (n_samples, n_inputs)           Input dataset (prediction)
+    Y           (n_samples, n_outputs)          Output dataset (training)
+    Yp          (n_samples, n_labels)           Output dataset (prediction)
+    W           (n_inputs, n_outputs)           Weight matrix
+    L2          scalar                          Regularization factor
+    J           scalar                          Cost function
+    grad        (n_var, )                       Unrolled gradient
+    theta       (n_var, )                       Unrolled weights
 
-For logistic regression:
-    theta       (1+n_features * classes, )          Unrolled weight matrix
-    W           (1+n_features, n_classes)           Weight matrix
-    Y           (n_samples, )                       Output classes
-    Yp          (n_samples, )                       Predicted output classes
-    grad        (1+n_features, n_classes)           Gradient
-
-For linear regression:
-    theta       (1+n_features * n_labels, )         Unrolled weight matrix
-    W           (1+n_features, n_labels)            Weight matrix
-    Y           (n_samples, n_labels)               Output labels
-    Yp          (n_samples, n_labels)               Predicted output labels
-    grad        (1+n_features, n_labels)            Gradient
+    n_samples           Number of samples.
+    n_inputs            Number of features in the original dataset plus 1.
+    n_outputs           Number of labels/classes in the output dataset.
+    n_labels            Number of outputs in the original dataset.
+    n_var               Number of variables.
 
 Notes:
 - input datasets <X> and <Xp> must include the column of 1s.
+- the number of variables is (n_inputs*n_outputs)
 - all gradients are returned unrolled.
 """
 
@@ -125,7 +123,7 @@ class Regression:
 
             # Most likely class
             idx = np.argmax(A, axis=1)
-            Yp = self.Yu[idx]
+            Yp = self.Yu[idx].reshape((len(idx,), 1))
 
         # Linear regression problem
         else:
