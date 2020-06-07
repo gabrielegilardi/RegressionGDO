@@ -123,7 +123,7 @@ class Regression:
 
             # Most likely class
             idx = np.argmax(A, axis=1)
-            Yp = self.Yu[idx].reshape((len(idx,), 1))
+            Yp = self.Yu[idx].reshape((len(idx), 1))
 
         # Linear regression problem
         else:
