@@ -32,9 +32,33 @@ import numpy as np
 
 def f_activation(z):
     """
-    Activation function (sigmoid)
+    Numerically stable version of the sigmoid function (reference:
+    http://fa.bianp.net/blog/2019/evaluate_logistic/#sec3.)
     """
-    a = 1.0 / (1.0 + np.exp(-z))
+    a = np.zeros_like(z)
+    idx = ( z >= 0.0)
+    a[idx] = 1.0 / (1.0 + np.exp(-z[idx]))
+    idx = (z < 0.0)
+    a[idx] = np.exp(z[idx]) / (1.0 + np.exp(z[idx]))
+
+    return a
+
+
+def logsig(z):
+    """
+    Numerically stable version of the log-sigmoid function (reference:
+    http://fa.bianp.net/blog/2019/evaluate_logistic/#sec3.)
+    """
+    a = np.zeros_like(z)
+    idx = (z < -33.0)
+    a[idx] = z[idx]
+    idx = (z >= -33.0) & (z < -18.0)
+    a[idx] = z[idx] - np.exp(z[idx])
+    idx = (z >= -18.0) & (z < 37.0)
+    a[idx] = - np.log1p(np.exp(-z[idx]))
+    idx = (z >= 37.0)
+    a[idx] = - np.exp(-z[idx])
+
     return a
 
 
@@ -150,12 +174,10 @@ class Regression:
 
         # Activation
         Z = X @ self.W
-        A = f_activation(Z)
-        A = np.fmin(np.fmax(A, tiny_number), (1.0 - tiny_number))
 
-        # Cost function
-        error = self.Yout * np.log(A) + (1.0 - self.Yout) * np.log(1.0 - A)
-        J = - error.sum() / n_samples \
+        # Cost function  (activation value is calculated in the logsig function)
+        error = (1.0 - self.Yout) * Z - logsig(Z)
+        J = error.sum() / n_samples \
             + self.L2 * (self.W[1:, :] ** 2).sum() / (2.0 * n_samples)
 
         # Return if gradient is not requested
@@ -163,6 +185,7 @@ class Regression:
             return J, 0.0
 
         # Gradient
+        A = f_activation(Z)
         a0 = np.zeros((1, self.W.shape[1]))
         grad = X.T @ (A - self.Yout) / n_samples \
                + self.L2 * np.vstack((a0, self.W[1:, :])) / n_samples
