@@ -1,5 +1,5 @@
 """
-Multivariate Linear and Logistic Regression
+Multivariate Linear and Logistic Regression.
 
 Copyright (c) 2020 Gabriele Gilardi
 
