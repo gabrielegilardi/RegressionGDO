@@ -83,7 +83,7 @@ if (example == 'plant'):
     # Closed-form solution:
     # [ 4.54308846e+02, -1.48096084e+01, -2.89406829e+00,  4.11171081e-01,
     #  -2.29397325e+00]
-    # Correlation predicted/actual values: 0.965 (training), 0.961 (test).
+    # Predicted/actual correlation values: 0.965 (training), 0.961 (test).
     # Exit on tolX after 2167 epochs
     data_file = 'plant_dataset.csv'
     n_features = 4
@@ -104,7 +104,7 @@ elif (example == 'stock'):
     #   0.00584854, -0.00018105, -0.00161590,  0.00545528,  0.00059722,
     #   0.00671988,  0.00202262,  0.00014225,  0.00309809,  0.00059391,
     #   0.00506524]
-    # Correlation predicted/actual values: 0.944 (training), 0.945 (test).
+    # Predicted/actual correlation values: 0.944 (training), 0.945 (test).
     # Exit on tolX after 812 epochs
     data_file = 'stock_dataset.csv'
     n_features = 7
@@ -120,7 +120,7 @@ elif (example == 'stock'):
 elif (example == 'seed'):
     # https://archive.ics.uci.edu/ml/datasets/seeds
     # Dataset: 7 features, 3 classes, 210 samples, 24 variables
-    # Accuracies predicted/actual values: 97.3% (training), 95.2% (test).
+    # Predicted/actual accuracy values: 97.3% (training), 95.2% (test).
     # Exit on tolF after 19387 epochs
     data_file = 'seed_dataset.csv'
     problem = 'C'
@@ -136,7 +136,7 @@ elif (example == 'seed'):
 elif (example == 'wine'):
     # https://archive.ics.uci.edu/ml/datasets/wine+quality
     # Dataset: 11 features, 6 classes, 1599 samples, 72 variables
-    # Accuracies predicted/actual values: 60.7% (training), 57.9% (test).
+    # Predicted/actual accuracy values: 60.7% (training), 57.9% (test).
     # Exit on epochs with tolX = 5.0e-5 and tolF= 2.0e-9
     data_file = 'wine_dataset.csv'
     problem = 'C'
