@@ -14,6 +14,7 @@
 - Cross-entropy cost function for logistic regression of classification problems.
 - Both cost functions include an L2-type regularization term.
 - Classes in logistic regression are determined automatically.
+- Sigmoid and cross-entropy function are computed using a numerically stable implementation.
 - Option to not to compute and return the gradient of the cost function.
 - Option to reduce the learning rate during the computation.
 - A gradient descent optimizer (GDO) is included in *utils.py*, together with several other utility functions.
@@ -68,7 +69,7 @@ The dataset has 4 features, 1 label, 9568 samples, and 5 variables.
 
 Closed-form solution: [4.54308846e+02, -1.48096084e+01, -2.89406829e+00,  4.11171081e-01, -2.29397325e+00].
 
-Correlation predicted/actual values: 0.965 (training), 0.961 (test).
+Predicted/actual correlation values: 0.965 (training), 0.961 (test).
 
 Exit on `tolX` after 2167 epochs.
 
@@ -92,7 +93,7 @@ The dataset has 7 features, 2 labels, 536 samples, and 16 variables.
 
 Closed-form solution: [ 0.00073131,  0.00136731, -0.00056476, -0.00317299,  0.00135512,  0.00584854, -0.00018105, -0.00161590,  0.00545528,  0.00059722,  0.00671988,  0.00202262,  0.00014225,  0.00309809,  0.00059391,  0.00506524]
 
-Correlation predicted/actual values: 0.944 (training), 0.945 (test).
+Predicted/actual correlation values: 0.944 (training), 0.945 (test).
 
 Exit on `tolX` after 812 epochs.
 
@@ -114,7 +115,7 @@ Original dataset: <https://archive.ics.uci.edu/ml/datasets/seeds>.
 
 The dataset has 7 features, 3 classes, 210 samples, and 24 variables.
 
-Accuracies predicted/actual values: 97.3% (training), 95.2% (test).
+Predicted/actual accuracy values: 97.3% (training), 95.2% (test).
 
 Exit on `tolF` after 19387 epochs.
 
@@ -136,6 +137,6 @@ Original dataset: <https://archive.ics.uci.edu/ml/datasets/wine+quality>.
 
 The dataset has 11 features, 6 classes, 1599 samples, and 72 variables.
 
-Accuracies predicted/actual values: 60.7% (training), 57.9% (test).
+Predicted/actual accuracy values: 60.7% (training), 57.9% (test).
 
 Exit on `epochs` with `tolX` = 5.0e-5 and `tolF`= 2.0e-9.

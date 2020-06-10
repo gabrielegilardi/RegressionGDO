@@ -6,11 +6,11 @@ Copyright (c) 2020 Gabriele Gilardi
 
 References
 ----------
-- Mathematical background: linear models in Scikit-Learn @
-https://scikit-learn.org/stable/modules/linear_model.html.
+- Mathematical background: linear models in Scikit-Learn
+  @ https://scikit-learn.org/stable/modules/linear_model.html.
 
-- Datasets: UCI Machine Learning Repository @
-https://archive.ics.uci.edu/ml/datasets.php.
+- Datasets: UCI Machine Learning Repository
+  @ https://archive.ics.uci.edu/ml/datasets.php.
 
 Characteristics
 ---------------
@@ -21,6 +21,8 @@ Characteristics
   problems.
 - Both cost functions include an L2-type regularization term.
 - Classes in logistic regression are determined automatically.
+- Sigmoid and cross-entropy function are computed using a numerically
+  stable implementation.
 - Option to not to compute and return the gradient of the cost function.
 - Option to reduce the learning rate during the computation.
 - A gradient descent optimizer (GDO) is included in <utils.py>, together
@@ -48,13 +50,13 @@ n_features
 L2
     Regularization factor.
 epochs
-    Max. number of iterations (GDO).
+    Max. number of iterations (GDO.)
 0 < alpha <= 1
-    Learning rate (GDO).
+    Learning rate (GDO.)
 0 < d_alpha <= 1
-    Rate decay of the learning rate (GDO).
+    Rate decay of the learning rate (GDO.)
 tolX, tolF
-    Gradient absolute tolerance and function relative tolerance (GDO). If both
+    Gradient absolute tolerance and function relative tolerance (GDO.) If both
     are specified the GDO will exit if either is satisfied. If both are not
     specified the GDO will exit when the max. number of iterations is reached.
 """
@@ -240,4 +242,3 @@ else:
     print("Corr. test data = ", utl.calc_corr(Yp_te, Y_te))
     print("\nClosed-form solution:")
     print(utl.regression_sol(X1n_tr, Y_tr).flatten())
-

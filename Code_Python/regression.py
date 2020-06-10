@@ -4,26 +4,25 @@ Class for Multivariate Linear and Logistic Regression.
 Copyright (c) 2020 Gabriele Gilardi
 
 
-Arrays:
-    X           (n_samples, n_inputs)           Input dataset (training)
-    Xp          (n_samples, n_inputs)           Input dataset (prediction)
-    Y           (n_samples, n_outputs)          Output dataset (training)
-    Yp          (n_samples, n_labels)           Output dataset (prediction)
-    W           (n_inputs, n_outputs)           Weight matrix
-    L2          scalar                          Regularization factor
-    J           scalar                          Cost function
-    grad        (n_var, )                       Unrolled gradient
-    theta       (n_var, )                       Unrolled weights
+X           (n_samples, n_inputs)           Input dataset (training)
+Xp          (n_samples, n_inputs)           Input dataset (prediction)
+Y           (n_samples, n_outputs)          Output dataset (training)
+Yp          (n_samples, n_labels)           Output dataset (prediction)
+W           (n_inputs, n_outputs)           Weight matrix
+L2          scalar                          Regularization factor
+J           scalar                          Cost function
+grad        (n_var, )                       Unrolled gradient
+theta       (n_var, )                       Unrolled weights
 
-    n_samples           Number of samples.
-    n_inputs            Number of features in the original dataset plus 1.
-    n_outputs           Number of labels/classes in the output dataset.
-    n_labels            Number of outputs in the original dataset.
-    n_var               Number of variables.
+n_samples           Number of samples
+n_inputs            Number of features in the original dataset plus 1
+n_outputs           Number of labels/classes in the output dataset
+n_labels            Number of outputs in the original dataset
+n_var               Number of variables
 
 Notes:
 - input datasets <X> and <Xp> must include the column of 1s.
-- the number of variables is (n_inputs*n_outputs)
+- the number of variables is (n_inputs*n_outputs).
 - all gradients are returned unrolled.
 """
 
@@ -36,8 +35,10 @@ def f_activation(z):
     http://fa.bianp.net/blog/2019/evaluate_logistic/#sec3.)
     """
     a = np.zeros_like(z)
-    idx = ( z >= 0.0)
+
+    idx = (z >= 0.0)
     a[idx] = 1.0 / (1.0 + np.exp(-z[idx]))
+
     idx = (z < 0.0)
     a[idx] = np.exp(z[idx]) / (1.0 + np.exp(z[idx]))
 
@@ -50,12 +51,16 @@ def logsig(z):
     http://fa.bianp.net/blog/2019/evaluate_logistic/#sec3.)
     """
     a = np.zeros_like(z)
-    idx = (z < -33.0)
+
+    idx = (z < -33.3)
     a[idx] = z[idx]
-    idx = (z >= -33.0) & (z < -18.0)
+
+    idx = (z >= -33.3) & (z < -18.0)
     a[idx] = z[idx] - np.exp(z[idx])
+
     idx = (z >= -18.0) & (z < 37.0)
     a[idx] = - np.log1p(np.exp(-z[idx]))
+
     idx = (z >= 37.0)
     a[idx] = - np.exp(-z[idx])
 
