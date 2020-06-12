@@ -1,5 +1,5 @@
 """
-Class for Multivariate Linear and Logistic Regression.
+Multivariate Linear and Logistic Regression Using Gradient Descent Optimization.
 
 Copyright (c) 2020 Gabriele Gilardi
 

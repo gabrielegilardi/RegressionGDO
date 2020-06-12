@@ -1,5 +1,5 @@
 """
-Utility functions for regression problems.
+Multivariate Linear and Logistic Regression Using Gradient Descent Optimization.
 
 Copyright (c) 2020 Gabriele Gilardi
 """

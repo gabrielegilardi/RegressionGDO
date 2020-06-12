@@ -1,4 +1,4 @@
-# Multivariate Linear and Logistic Regression
+# Multivariate Linear and Logistic Regression Using Gradient Descent Optimization
 
 ## Reference
 
