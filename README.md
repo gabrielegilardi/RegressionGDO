@@ -47,7 +47,7 @@
 
 ## Examples
 
-There are four examples in *test.py*: house, stock, seed, wine. Since GDO is used, `use_grad` is set to `True`.
+There are four examples in *test.py*: plant, stock, seed, wine. Since GDO is used, `use_grad` is set to `True`.
 
 ### Single-label linear regression example: plant
 
